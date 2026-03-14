@@ -2,7 +2,7 @@ const initSqlJs = require("sql.js");
 const fs = require("fs");
 const path = require("path");
 
-const DB_PATH = path.join(__dirname, "genesis.db");
+const DB_PATH = process.env.DB_PATH || path.join(__dirname, "genesis.db");
 let db = null;
 
 async function getDb() {
