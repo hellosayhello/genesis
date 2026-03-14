@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
    Everyone sees the world. Only admin can control it.
    ═══════════════════════════════════════════════════════════════ */
 
-const API = "/api";
+const API = "https://genesis-production-f3fb.up.railway.app/api";
 
 async function api(path, opts = {}) {
   const res = await fetch(`${API}${path}`, {
