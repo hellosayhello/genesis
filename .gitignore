@@ -1,0 +1,4 @@
+node_modules/
+.env
+genesis.db
+.DS_Store
