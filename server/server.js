@@ -8,7 +8,7 @@ const db = require("./db");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors({ origin: process.env.CLIENT_ORIGIN || "*", credentials: true }));
+app.use(cors({ origin: "*", methods: ["GET", "POST"], allowedHeaders: ["Content-Type", "x-admin-key"] }));
 app.use(express.json());
 
 // Health check (no auth)
