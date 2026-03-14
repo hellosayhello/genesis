@@ -312,7 +312,7 @@ export default function Genesis() {
           </div>
 
           {/* MAIN */}
-          <div className="g-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, padding: "12px 20px 24px", maxWidth: 1200, margin: "0 auto" }}>
+          <div className="g-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, padding: "12px 20px 24px", maxWidth: 1600, margin: "0 auto" }}>
             <div>
               <div style={{ fontSize: 8, color: "#6a6a80", letterSpacing: 2, marginBottom: 8, fontWeight: 600 }}>INFORMATION TOPOLOGY</div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
