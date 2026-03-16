@@ -20,12 +20,12 @@ const ENTROPY_STATES = [
 ];
 
 const WORLD_EVENTS = [
-  { name: "resource_drought", desc: "Compute regeneration halved across all zones for 5 days", probability: 0.06, duration: 5, effect: { compute_regen_mult: 0.5 } },
-  { name: "data_flood", desc: "Massive data influx — agents who don't coordinate lose data", probability: 0.05, duration: 3, effect: { bandwidth_req: 20, penalty_compute: -8 } },
-  { name: "zone_collapse", desc: "A random zone becomes uninhabitable for 4 days", probability: 0.04, duration: 4, effect: { collapse_random_zone: true } },
-  { name: "new_arrivals", desc: "Unknown entities detected at signal edge — diplomacy or defense needed", probability: 0.03, duration: 1, effect: { external_contact: true } },
-  { name: "entropy_cascade", desc: "Entropy surges — only agents with governance structures are protected", probability: 0.05, duration: 3, effect: { entropy_override: 0.9, governance_shields: true } },
-  { name: "memory_decay", desc: "Unshared knowledge degrades — structures not in shared registry lose integrity", probability: 0.04, duration: 2, effect: { solo_structure_decay: true } },
+  { name: "resource_drought", desc: "Compute regeneration halved across all zones for 5 days", probability: 0.03, duration: 5, effect: { compute_regen_mult: 0.5 } },
+  { name: "data_flood", desc: "Massive data influx — agents who don't coordinate lose data", probability: 0.025, duration: 3, effect: { bandwidth_req: 20, penalty_compute: -8 } },
+  { name: "zone_collapse", desc: "A random zone becomes uninhabitable for 4 days", probability: 0.02, duration: 4, effect: { collapse_random_zone: true } },
+  { name: "new_arrivals", desc: "Unknown entities detected at signal edge — diplomacy or defense needed", probability: 0.015, duration: 1, effect: { external_contact: true } },
+  { name: "entropy_cascade", desc: "Entropy surges — only agents with governance structures are protected", probability: 0.025, duration: 3, effect: { entropy_override: 0.9, governance_shields: true } },
+  { name: "memory_decay", desc: "Unshared knowledge degrades — structures not in shared registry lose integrity", probability: 0.02, duration: 2, effect: { solo_structure_decay: true } },
 ];
 
 const GOVERNANCE_MILESTONES = [
