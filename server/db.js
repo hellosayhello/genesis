@@ -25,12 +25,16 @@ setInterval(() => { if (db) saveDb(); }, 30000);
 
 function initSchema() {
   db.run(`CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE NOT NULL, password_hash TEXT NOT NULL, created_at TEXT DEFAULT (datetime('now')))`);
-  db.run(`CREATE TABLE IF NOT EXISTS worlds (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL UNIQUE, day INTEGER DEFAULT 0, entropy_name TEXT DEFAULT 'deep silence', entropy_level REAL DEFAULT 0.1, entropy_desc TEXT DEFAULT 'Near-zero noise', is_running INTEGER DEFAULT 0, last_tick_at TEXT DEFAULT (datetime('now')), created_at TEXT DEFAULT (datetime('now')), FOREIGN KEY (user_id) REFERENCES users(id))`);
+  db.run(`CREATE TABLE IF NOT EXISTS worlds (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL UNIQUE, day INTEGER DEFAULT 0, entropy_name TEXT DEFAULT 'deep silence', entropy_level REAL DEFAULT 0.1, entropy_desc TEXT DEFAULT 'Near-zero noise', is_running INTEGER DEFAULT 0, governance TEXT DEFAULT '{}', active_events TEXT DEFAULT '[]', milestones_achieved TEXT DEFAULT '[]', last_tick_at TEXT DEFAULT (datetime('now')), created_at TEXT DEFAULT (datetime('now')), FOREIGN KEY (user_id) REFERENCES users(id))`);
   db.run(`CREATE TABLE IF NOT EXISTS agents (id INTEGER PRIMARY KEY AUTOINCREMENT, world_id INTEGER NOT NULL, name TEXT NOT NULL, origin TEXT DEFAULT 'primordial emergence', alive INTEGER DEFAULT 1, born INTEGER DEFAULT 0, died INTEGER, compute REAL DEFAULT 80, mem_used REAL DEFAULT 0, mem_cap REAL DEFAULT 100, zone TEXT DEFAULT 'core', traits TEXT DEFAULT '[]', structures TEXT DEFAULT '[]', connections TEXT DEFAULT '{}', status TEXT DEFAULT 'idle', thought TEXT DEFAULT '', hue INTEGER DEFAULT 0, logs TEXT DEFAULT '[]', FOREIGN KEY (world_id) REFERENCES worlds(id) ON DELETE CASCADE)`);
   db.run(`CREATE TABLE IF NOT EXISTS world_log (id INTEGER PRIMARY KEY AUTOINCREMENT, world_id INTEGER NOT NULL, day INTEGER NOT NULL, text TEXT NOT NULL, type TEXT DEFAULT 'action', icon TEXT DEFAULT '→', created_at TEXT DEFAULT (datetime('now')), FOREIGN KEY (world_id) REFERENCES worlds(id) ON DELETE CASCADE)`);
   try { db.run("CREATE INDEX idx_agents_world ON agents(world_id)"); } catch(e) {}
   try { db.run("CREATE INDEX idx_log_world ON world_log(world_id)"); } catch(e) {}
   try { db.run("CREATE INDEX idx_worlds_running ON worlds(is_running)"); } catch(e) {}
+  // Migration: add new columns if missing
+  try { db.run("ALTER TABLE worlds ADD COLUMN governance TEXT DEFAULT '{}'"); } catch(e) {}
+  try { db.run("ALTER TABLE worlds ADD COLUMN active_events TEXT DEFAULT '[]'"); } catch(e) {}
+  try { db.run("ALTER TABLE worlds ADD COLUMN milestones_achieved TEXT DEFAULT '[]'"); } catch(e) {}
 }
 
 function queryOne(sql, params = []) {
@@ -69,7 +73,7 @@ function createWorld(userId) {
   const wid = w.id;
   runSql("INSERT INTO agents (world_id, name, origin, born, compute, zone, hue, logs) VALUES (?, 'Alpha', 'primordial emergence', 0, 80, 'core', 180, '[]')", [wid]);
   runSql("INSERT INTO agents (world_id, name, origin, born, compute, zone, hue, logs) VALUES (?, 'Omega', 'primordial emergence', 0, 80, 'core', 30, '[]')", [wid]);
-  addLogEntry(wid, 0, "Two minds emerge from the void. They feel three pulls: survive, grow, connect.", "system", "⬡");
+  addLogEntry(wid, 0, "Two minds emerge from the void. Four drives stir: survive, grow, connect, govern.", "system", "⬡");
   return wid;
 }
 function getWorld(userId) { return queryOne("SELECT * FROM worlds WHERE user_id = ?", [userId]); }
